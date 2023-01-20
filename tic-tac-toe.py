@@ -1,87 +1,143 @@
-"J'ai trouve ce code sur internet que je vais commenter"
-
-"On crée tout d'abord une fonction pour la grille principale du jeu"
-"On constate 3 rang de 0 à 2. Pour cela, on utilise la fonction range()"
-
-
-def afficher_grille(grille):
-    print("     0)  1)  2)")
-    print("   -------------")
-    print("0)", end='')
-    for i in range(3):
-        print(" | "+str(grille[i]), end='')
-    print(" |")
-    print("   -------------")
-    print("1)", end='')
-    for i in range(3):
-        print(" | "+str(grille[i+3]), end='')
-    print(" |")
-    print("   -------------")
-    print("2)", end='')
-    for i in range(3):
-        print(" | "+str(grille[i+6]), end='')
-    print(" |")
-    print("   -------------")
+nb1 = "1"
+nb2 = "2"
+nb3 = "3"
+nb4 = "4"
+nb5 = "5"
+nb6 = "6"
+nb7 = "7"
+nb8 = "8"
+nb9 = "9"
+jeux = 0
+placement = ""
+gagnant = ""
+X = "\033[1;34mX\033[0;00m"
+O = "\033[1;31mO\033[0;00m"
 
 
-def tour(grille, joueur):
-    print("C'est le tour du joueur "+str(joueur))
-    colonne=input("Entrez le numero de la colonne : ")
-    ligne=input("Entrez le numero de la ligne : ")
-    print("Vous avez joué la case ("+colonne+","+ligne+")")
-    while grille[int(colonne)+int(ligne)*3]!=" ":
-        afficher_grille(grille)
-        print("Cette case est deja jouée ! Saisissez une autre case svp !")
-        colonne=input("Entrez le numero de la colonne : ")
-        ligne=input("Entrez le numero de la ligne : ")
-        print("Vous avez joué la case ("+colonne+","+ligne+")")
-
-    if joueur==1 :
-        grille[int(colonne)+int(ligne)*3]="X"
-    if joueur==2 :
-        grille[int(colonne)+int(ligne)*3]="O"
-    afficher_grille(grille)
-
-def est_gagnant(grille):
-    if (grille[0]==grille[1]) and (grille[0]==grille[2]) and (grille[0]!=" "):
-        return 1
-    if (grille[3]==grille[4]) and (grille[3]==grille[5]) and (grille[3]!=" "):
-        return 1
-    if (grille[6]==grille[7]) and (grille[6]==grille[8]) and (grille[6]!=" "):
-        return 1
-    if (grille[0]==grille[3]) and (grille[0]==grille[6]) and (grille[0]!=" "):
-        return 1
-    if (grille[1]==grille[4]) and (grille[1]==grille[7]) and (grille[1]!=" "):
-        return 1
-    if (grille[2]==grille[5]) and (grille[2]==grille[8]) and (grille[2]!=" "):
-        return 1
-    if (grille[0]==grille[4]) and (grille[0]==grille[8]) and (grille[0]!=" "):
-        return 1
-    if (grille[2]==grille[4]) and (grille[2]==grille[6]) and (grille[2]!=" "):
-        return 1
+def print_case():
+    print("")
+    print(nb1, "|", nb2, "|", nb3)
+    print("-- --- --")
+    print(nb4, "|", nb5, "|", nb6)
+    print("-- --- --")
+    print(nb7, "|", nb8, "|", nb9)
+    print("")
 
 
-def est_match_nul(grille):
-    for i in range(9):
-        if grille[i]==" ":
-            return 0
-    return 1
+def res_gagnant():
+    print(gagnant + "YOU WIN !!!")
+    print("")
 
-joueur=1
-print("Le joueur 1 possède les X. Le joueur 2 possède les O")
-grille=[" "," "," "," "," "," "," "," "," "]
-afficher_grille(grille)
-gagne=0
-while gagne==0:
-    tour(grille,joueur)
-    if est_gagnant(grille):
-        print("Le joueur "+str(joueur)+" remporte la partie")
-        gagne=1
+
+def res_nul():
+    print("\033[1;33mEQUALITY\033[0;0m")
+    print("")
+
+
+print_case()
+
+while gagnant == "":
+
+    if jeux % 2 == 0:
+        placement = input("\033[1;34m Player X \033[0;0m Choose a place: ")
+        if placement == "1" and nb1 == "1":
+            nb1 = X
+            jeux += 1
+        
+        elif placement == "2" and nb2 == "2":
+            nb2 = X
+            jeux += 1
+        
+        elif placement == "3" and nb3 == "3":
+            nb3 = X
+            jeux += 1
+        
+        elif placement == "4" and nb4 == "4":
+            nb4 = X
+            jeux += 1
+        
+        elif placement == "5" and nb5 == "5":
+            nb5 = X
+            jeux += 1
+        
+        elif placement == "6" and nb6 == "6":
+            nb6 = X
+            jeux += 1
+        
+        elif placement == "7" and nb7 == "7":
+            nb7 = X
+            jeux += 1
+        
+        elif placement == "8" and nb8 == "8":
+            nb8 = X
+            jeux += 1
+        
+        elif placement == "9" and nb9 == "9":
+            nb9 = X
+            jeux += 1
+        
+        else:
+            print("\033[1;32m Choose a other case \033[0;0m")
+        print_case()
+
+    if nb1 == X and nb2 == X and nb3 == X or nb4 == X and nb5 == X and nb6 == X or nb7 == X and nb8 == X and nb9 == X or nb1 == X and nb4 == X and nb7 == X or nb3 == X and nb6 == X and nb9 == X or nb1 == X and nb5 == X and nb9 == X or nb3 == X and nb5 == X and nb7 == X:
+        gagnant = X
+
     else:
-        if est_match_nul(grille):
-            print("Plus de place ! Match nul !")
-            gagne=1
-    if joueur==1:
-        joueur=2
+        (nb1 != "1" and nb2 != "2" and nb3 != "3" and nb4 != "4" and nb5 != "5" and nb6 !=
+         "6" and nb7 != "7" and nb8 != "8" and nb9 != "9") and gagnant == ""
+
+    if jeux % 1 == 0:
+        placement = input("\033[1;31m Player O \033[0;00m Choose a place: ")
+        if placement == "1" and nb1 == "1":
+            nb1 = O
+            jeux += 1
+        
+        elif placement == "2" and nb2 == "2":
+            nb2 = O
+            jeux += 1
+        
+        elif placement == "3" and nb3 == "3":
+            nb3 = O
+            jeux += 1
+        
+        elif placement == "4" and nb4 == "4":
+            nb4 = O
+            jeux += 1
+        
+        elif placement == "5" and nb5 == "5":
+            nb5 = O
+            jeux += 1
+        
+        elif placement == "6" and nb6 == "6":
+            nb6 = O
+            jeux += 1
+        
+        elif placement == "7" and nb7 == "7":
+            nb7 = O
+            jeux += 1
+        
+        elif placement == "8" and nb8 == "8":
+            nb8 = O
+            jeux += 1
+        
+        elif placement == "9" and nb9 == "9":
+            nb9 = O
+            jeux += 1
+        
+        else:
+            print("\033[1;32m Choose a other case \033[0;0m")
+        print_case()
+
+    if nb1 == O and nb2 == O and nb3 == O or nb4 == O and nb5 == O and nb6 == O or nb7 == O and nb8 == O and nb9 == O or nb1 == O and nb4 == O and nb7 == O or nb3 == O and nb6 == O and nb9 == O or nb1 == O and nb5 == O and nb9 == O or nb3 == O and nb5 == O and nb7 == O:
+        gagnant = O
+
     else:
-        joueur=1
+        (nb1 != "1" and nb2 != "2" and nb3 != "3" and nb4 != "4" and nb5 != "5" and nb6 !=
+         "6" and nb7 != "7" and nb8 != "8" and nb9 != "9") and gagnant == ""
+
+
+if gagnant == "":
+    res_nul()
+else:
+    res_gagnant()
